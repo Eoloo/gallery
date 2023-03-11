@@ -1,0 +1,37 @@
+pipeline {
+    agent any
+    
+    tools {nodejs "node"}
+
+    stages {
+        stage('Start') {
+            steps {
+                echo 'Build is starting'
+            }
+        }
+        stage('Clone github repository') {
+            steps {
+                git url: 'https://github.com/Eoloo/gallery.git', branch: 'master'
+            }
+        }
+        stage('Install dependencies') {
+            steps {
+                bat '''
+                   npm install
+                   '''
+            }
+        }
+        stage("Deploy") {
+            steps {
+                bat '''
+                   curl -d POST https://api.render.com/deploy/srv-cg3q8jkeooggf9nl0shg?key=FLh8FPN4ddc
+                   '''
+            }
+        }
+        stage("End") {
+            steps {
+                echo 'Build has run successfully'
+            }
+        }
+    }
+}
