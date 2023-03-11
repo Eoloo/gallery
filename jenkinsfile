@@ -11,7 +11,7 @@ pipeline {
         }
         stage('Clone github repository') {
             steps {
-                git url: 'https://github.com/Eoloo/gallery.git', branch: 'master'
+                git url: 'https://github.com/Eoloo/gallery.git', branch: 'test'
             }
         }
         stage('Install dependencies') {
