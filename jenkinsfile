@@ -56,19 +56,10 @@ pipeline {
             steps {
                 echo 'Build has run successfully'
             }
-        // stage("Slack") {
-        //     steps {
-        //         slackSend message: "Slack test"
-        //         }
-        //     }
-        post {
-        always {
-            script {
-                BUILD_USER = getBuildUser()
-            }
-            slackSend channel: '#evans_ip1',
-                color: COLOR_MAP[currentBuild.currentResult],
-                message: "*${currentBuild.currentResult}:* Job ${env.JOB_NAME} build ${env.BUILD_NUMBER} by ${BUILD_USER}\n More info at: ${env.BUILD_URL}"
+        stage("Slack") {
+            steps {
+                slackSend channel: "#evans_ip1", message: "Build Started: ${env.JOB_NAME} ${env.BUILD_NUMBER}"
+                }
             }
         }
     }
